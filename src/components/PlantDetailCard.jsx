@@ -1,12 +1,14 @@
-function PlantDetailsCard({ plant, handleAddToCart }) {
+function PlantDetailsCard({ plant, handleAddToCart, disableAddToCart }) {
+  const disableClass = disableAddToCart ? "added-to-cart" : "";
+  const buttonClasses = `product-button ${disableClass}`;
   return (
     <div className="product-card">
       <div className="product-title">{plant.name}</div>
       <img className="product-image" src={plant.image} alt={plant.name} />
       <div className="product-price"> {plant.cost}</div>
       <p>{plant.description}</p>
-      <button className="product-button" onClick={() => handleAddToCart(plant)}>
-        Add to Cart
+      <button className={buttonClasses} onClick={() => handleAddToCart(plant)}>
+        {disableAddToCart ? "Added to Cart" : "Add to Cart"}
       </button>
     </div>
   );

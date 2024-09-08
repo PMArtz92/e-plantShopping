@@ -369,6 +369,7 @@ function ProductList() {
                     key={plantIndex}
                     plant={plant}
                     handleAddToCart={handleAddToCart}
+                    disableAddToCart={addedToCart[plant.name]}
                   />
                 ))}
               </div>
