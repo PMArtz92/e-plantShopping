@@ -165,14 +165,15 @@ function ProductList() {
           name: "Aloe Vera",
           image:
             "https://cdn.pixabay.com/photo/2018/04/02/07/42/leaf-3283175_1280.jpg",
-          description: "Soothing gel used for skin ailments.",
+          description: "Purifies the air and has healing properties for skin.",
           cost: "$14",
         },
         {
           name: "Echinacea",
           image:
             "https://cdn.pixabay.com/photo/2014/12/05/03/53/echinacea-557477_1280.jpg",
-          description: "Boosts immune system, helps fight colds.",
+          description:
+            "Boosts immune system, helps fight colds and fever. Good for health",
           cost: "$16",
         },
         {
