@@ -288,6 +288,14 @@ function ProductList() {
       [product.name]: true,
     }));
   };
+
+  const updateAddedToCart = (itemName) => {
+    setAddedToCart((prevState) => ({
+      ...prevState,
+      [itemName]: false,
+    }));
+  };
+
   useEffect(() => {
     if (cart.length > 0) {
       let totalItems = 0;
@@ -300,8 +308,12 @@ function ProductList() {
         setCartNumberX(106);
       }
       setCartItemCount(totalItems);
+    } else {
+      setCartItemCount(0);
+      setAddedToCart({});
     }
   }, [cart]);
+
   return (
     <div>
       <div className="navbar">
@@ -377,7 +389,10 @@ function ProductList() {
           ))}
         </div>
       ) : (
-        <CartItem onContinueShopping={handleContinueShopping} />
+        <CartItem
+          onContinueShopping={handleContinueShopping}
+          updateAddedToCart={updateAddedToCart}
+        />
       )}
     </div>
   );

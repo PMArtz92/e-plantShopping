@@ -7,7 +7,11 @@ function PlantDetailsCard({ plant, handleAddToCart, disableAddToCart }) {
       <img className="product-image" src={plant.image} alt={plant.name} />
       <div className="product-price"> {plant.cost}</div>
       <p>{plant.description}</p>
-      <button className={buttonClasses} onClick={() => handleAddToCart(plant)}>
+      <button
+        className={buttonClasses}
+        onClick={() => handleAddToCart(plant)}
+        disabled={disableAddToCart}
+      >
         {disableAddToCart ? "Added to Cart" : "Add to Cart"}
       </button>
     </div>
