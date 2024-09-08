@@ -3,12 +3,15 @@ import "./ProductList.css";
 import CartItem from "./CartItem";
 import PlantDetailsCard from "./components/PlantDetailCard";
 import { addItem } from "./CartSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 function ProductList() {
   const dispatch = useDispatch();
   const [showCart, setShowCart] = useState(false);
   const [showPlants, setShowPlants] = useState(false); // State to control the visibility of the About Us page
   const [addedToCart, setAddedToCart] = useState({});
+  const [cartItemCount, setCartItemCount] = useState(0);
+  const [cartNumberX, setCartNumberX] = useState(108);
+  const cart = useSelector((state) => state.cart.items);
   const plantsArray = [
     {
       category: "Air Purifying Plants",
@@ -251,15 +254,7 @@ function ProductList() {
       ],
     },
   ];
-  const styleObj = {
-    backgroundColor: "#4CAF50",
-    color: "#fff!important",
-    padding: "15px",
-    display: "flex",
-    justifyContent: "space-between",
-    alignIems: "center",
-    fontSize: "20px",
-  };
+
   const styleObjUl = {
     display: "flex",
     justifyContent: "space-between",
@@ -290,12 +285,26 @@ function ProductList() {
     dispatch(addItem(product));
     setAddedToCart((prevState) => ({
       ...prevState,
-      [product.name]: true, // Set the product name as key and value as true to indicate it's added to cart
+      [product.name]: true,
     }));
   };
+  useEffect(() => {
+    if (cart.length > 0) {
+      let totalItems = 0;
+      cart.forEach((item) => {
+        totalItems += item.quantity;
+      });
+      if (totalItems > 9) {
+        setCartNumberX(80);
+      } else {
+        setCartNumberX(106);
+      }
+      setCartItemCount(totalItems);
+    }
+  }, [cart]);
   return (
     <div>
-      <div className="navbar" style={styleObj}>
+      <div className="navbar">
         <div className="tag">
           <div className="luxury">
             <img
@@ -317,7 +326,6 @@ function ProductList() {
             </a>
           </div>
           <div>
-            {" "}
             <a href="#" onClick={(e) => handleCartClick(e)} style={styleA}>
               <h1 className="cart">
                 <svg
@@ -339,6 +347,9 @@ function ProductList() {
                     stroke-width="2"
                     id="mainIconPathAttribute"
                   ></path>
+                  <text x={cartNumberX} y="160" fill="white" fontSize={100}>
+                    {cartItemCount}
+                  </text>
                 </svg>
               </h1>
             </a>
@@ -349,9 +360,9 @@ function ProductList() {
         <div className="product-grid">
           {plantsArray.map((category, index) => (
             <div key={index}>
-              <h1>
-                <div>{category.category}</div>
-              </h1>
+              <div className="product-list-title-container">
+                <h1 className="product-list-title">{category.category}</h1>
+              </div>
               <div className="product-list">
                 {category.plants.map((plant, plantIndex) => (
                   <PlantDetailsCard

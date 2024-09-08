@@ -8,9 +8,19 @@ const CartItem = ({ onContinueShopping }) => {
   const dispatch = useDispatch();
 
   // Calculate total amount for all products in the cart
-  const calculateTotalAmount = () => {};
+  const calculateTotalAmount = () => {
+    let totalAmount = 0;
+    cart.forEach((item) => {
+      const itemTotalCost = parseInt(item.cost.split("$")[1]) * item.quantity;
+      totalAmount += itemTotalCost;
+    });
 
-  const handleContinueShopping = (e) => {};
+    return totalAmount;
+  };
+
+  const handleContinueShopping = (e) => {
+    onContinueShopping(e);
+  };
 
   const handleIncrement = (item) => {
     const itemToUpdate = cart.find((product) => product.name == item.name);
@@ -23,11 +33,13 @@ const CartItem = ({ onContinueShopping }) => {
 
   const handleDecrement = (item) => {
     let itemToUpdate = cart.find((product) => product.name == item.name);
-    if (itemToUpdate.quantity > 0) {
-      const newQuantity = itemToUpdate.quantity - 1;
+    const newQuantity = itemToUpdate.quantity - 1;
+    if (newQuantity > 0) {
       dispatch(
         updateQuantity({ name: itemToUpdate.name, quantity: newQuantity })
       );
+    } else {
+      dispatch(removeItem(item.name));
     }
   };
 
@@ -36,7 +48,14 @@ const CartItem = ({ onContinueShopping }) => {
   };
 
   // Calculate total cost based on quantity for an item
-  const calculateTotalCost = (item) => {};
+  const calculateTotalCost = (item) => {
+    const itemCost = parseInt(item.cost.split("$")[1]);
+    return item.quantity * itemCost;
+  };
+
+  const handleCheckoutShopping = (e) => {
+    alert("Functionality to be added for future reference");
+  };
 
   return (
     <div className="cart-container">
@@ -92,7 +111,12 @@ const CartItem = ({ onContinueShopping }) => {
           Continue Shopping
         </button>
         <br />
-        <button className="get-started-button1">Checkout</button>
+        <button
+          className="get-started-button1"
+          onClick={handleCheckoutShopping}
+        >
+          Checkout
+        </button>
       </div>
     </div>
   );
